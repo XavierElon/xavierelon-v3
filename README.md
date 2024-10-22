@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Xavier Elon Portfolio V3
 
-## Getting Started
+## How it works?
 
-First, run the development server:
+Most of the grid heavy lifting is done by [react-grid-layout](https://github.com/react-grid-layout/react-grid-layout), react helps in changing the grid config when clicking on nav buttons and since `react-grid-layout` uses transforms, adding css animation to `react-grid-item` allows for smooth transitions.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### index.css
+
+```css
+.react-grid-item.react-grid-placeholder {
+  background: rgba(0, 0, 0, 0.438) none repeat scroll 0% 0%;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  border-radius: 32px;
+  transition: all 500ms ease 0s !important;
+  will-change: transform;
+}
+
+.react-grid-item {
+  transition: visibility 500ms ease 0s;
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Some gotchas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- You need to import react-grid-layout styles from node_modules in your global CSS.
+- I manually wrote the grid configuration for my site for each of the different layouts. There might be a better way to create or generate this configuration.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## How to run locally
 
-To learn more about Next.js, take a look at the following resources:
+- Clone/fork the repo: `git clone https://github.com/manish-basargekar/moving-bento-grid.git`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Install `node_modules` `npm i`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Run the vite app `npm run dev`
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to contribute and suggest improvements!
