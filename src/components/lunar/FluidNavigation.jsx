@@ -175,4 +175,4 @@ export function Item({ onActivated = () => {}, active = false, as: Component = '
   )
 }
 
-export const Navigation = Object.assign(Root, { List, Item })
+export const FluidNavigation = Object.assign(Root, { List, Item })
