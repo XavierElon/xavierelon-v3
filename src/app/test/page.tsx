@@ -2,6 +2,7 @@
 
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
+import CursorGradient from '@/components/CursorGradient'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -9,13 +10,17 @@ interface StarGridItemProps {
 }
 
 export default function Test() {
-  const columns = 50 // Number of columns
-  const rows = 25 // Number of rows
+  const columns = 60
+  const rows = 30
   const totalStars = columns * rows
   const items = Array(totalStars).fill(0)
 
   return (
     <div className="w-screen h-screen">
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/40 to-teal-900/40 z-10"></div> */}
+
+      <CursorGradient />
+
       <StarGrid
         active={20} // Maximum number of stars to activate at once
         featured={10} // Maximum number of stars to feature at once
@@ -40,8 +45,8 @@ export default function Test() {
                   style={{ '--duration': `${(index % 3) * 1.5}s` }}
                   className={clsx(
                     {
-                      'scale-50 bg-white/10': !isActive && !isFeatured,
-                      'h-1 w-1 ': isActive || isFeatured,
+                      'scale-50 bg-white/20': !isActive && !isFeatured,
+                      'h-2 w-2 ': isActive || isFeatured,
                       'bg-white/30': isActive && !isFeatured,
                       'bg-cyan-400': isFeatured
                     },
