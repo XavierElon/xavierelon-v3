@@ -3,6 +3,7 @@
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
 import CursorGradient from '@/components/CursorGradient'
+import { FluidNavigation } from '@/components/lunar/FluidNavigation'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -15,9 +16,50 @@ export default function Test() {
   const totalStars = columns * rows
   const items = Array(totalStars).fill(0)
 
+  const navItems = ['Overview', 'Integrations', 'Activity', 'Domains', 'Usage', 'Monitoring']
+
+  function navigate() {
+    // the callback is fired once the animation is completed
+    // to allow smooth transition
+  }
+
   return (
     <div className="w-screen h-screen">
       {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/40 to-teal-900/40 z-10"></div> */}
+      <div className="mx-auto shrink-0 overflow-hidden rounded-full">
+        <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2">
+          {({ ready, size, position, duration }: any) => (
+            <div
+              style={{
+                '--size': size,
+                '--position': position,
+                '--duration': duration
+              }}
+            >
+              <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
+
+              <div className="absolute inset-0 rounded-full bg-transparent"></div>
+
+              <div className="relative">
+                <div className={clsx({ hidden: !ready }, 'absolute inset-y-0 h-full w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white/10 transition-[width,transform] duration-[--duration]')}></div>
+                <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/3 w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white opacity-20 blur-md transition-[width,transform] duration-[--duration]')}></div>
+
+                <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
+                  {navItems.map((item, index) => (
+                    <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
+                      {({ setActive, isActive }: any) => (
+                        <a href="#" className={clsx([isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75'], 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
+                          {item}
+                        </a>
+                      )}
+                    </FluidNavigation.Item>
+                  ))}
+                </FluidNavigation.List>
+              </div>
+            </div>
+          )}
+        </FluidNavigation>
+      </div>
 
       <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
       <StarGrid
@@ -31,7 +73,8 @@ export default function Test() {
         style={{
           gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
           gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`
-        }}>
+        }}
+      >
         {items.map((item, index) => (
           <StarGrid.Item key={index} className="relative flex aspect-square w-full items-center justify-center">
             {({ isActive, isFeatured }: StarGridItemProps) => (
@@ -50,7 +93,8 @@ export default function Test() {
                       'bg-cyan-400': isFeatured
                     },
                     'relative h-1 w-1 rounded-full transition-all duration-500 [animation-duration:--duration]'
-                  )}></div>
+                  )}
+                ></div>
               </>
             )}
           </StarGrid.Item>
