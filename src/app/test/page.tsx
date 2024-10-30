@@ -19,8 +19,7 @@ export default function Test() {
     <div className="w-screen h-screen">
       {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/40 to-teal-900/40 z-10"></div> */}
 
-      <CursorGradient />
-
+      <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
       <StarGrid
         active={20} // Maximum number of stars to activate at once
         featured={10} // Maximum number of stars to feature at once
