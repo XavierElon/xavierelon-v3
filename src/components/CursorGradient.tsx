@@ -41,7 +41,7 @@ const CursorGradient: React.FC<CursorGradientProps> = ({
           zIndex: 9999
         }}
       />
-      {/* Gradient and central dot */}
+      {/* Gradient background */}
       <div
         className="fixed pointer-events-none rounded-full rotating-gradient"
         style={{
@@ -53,30 +53,35 @@ const CursorGradient: React.FC<CursorGradientProps> = ({
           background: 'conic-gradient(#3effe8, #8c0fee, #3effe8)',
           filter: 'blur(60px)',
           zIndex: -1
-        }}>
-        {/* Midpoint White Circle */}
-        <div
-          className="absolute top-1/2 left-1/2 rounded-full"
-          style={{
-            width: `${radius}px`,
-            height: `${radius}px`,
-            backgroundColor: 'rgba(255, 255, 255, 0.2)', // Adjust opacity as needed
-            transform: 'translate(-50%, -50%)'
-          }}
-        />
-        {/* Central White Dot */}
-        <div
-          className="absolute top-1/2 left-1/2"
-          style={{
-            width: `${dotSize}px`,
-            height: `${dotSize}px`,
-            backgroundColor: '#ffffff',
-            borderRadius: '50%',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 10000
-          }}
-        />
-      </div>
+        }}
+      />
+      {/* Midpoint White Circle */}
+      <div
+        className="fixed pointer-events-none rounded-full"
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          width: `${radius}px`,
+          height: `${radius}px`,
+          backgroundColor: 'rgba(255, 255, 255, 0.2)', // Adjust opacity as needed
+          transform: 'translate(-50%, -50%)',
+          zIndex: 0
+        }}
+      />
+      {/* Central White Dot */}
+      <div
+        className="fixed pointer-events-none"
+        style={{
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+          width: `${dotSize}px`,
+          height: `${dotSize}px`,
+          backgroundColor: '#ffffff',
+          borderRadius: '50%',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 99999
+        }}
+      />
     </>
   )
 }
