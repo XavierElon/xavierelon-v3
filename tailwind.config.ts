@@ -30,11 +30,21 @@ module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx,mdx}', './src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   darkMode: 'class',
   theme: {
-    // rest of the code
+    extend: {
+      keyframes: {
+        spinCursor: {
+          '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
+          '100%': { transform: 'translate(-50%, -50%) rotate(360deg)' }
+        }
+      },
+      animation: {
+        spinCursor: 'spinCursor 5s linear infinite'
+      }
+    }
   },
   plugins: [
     addVariablesForColors,
-    function({ matchUtilities, theme }: any) {
+    function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           'bg-grid': (value: any) => ({
