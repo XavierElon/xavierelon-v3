@@ -10,14 +10,21 @@ interface CursorGradientProps {
 const CursorGradient: React.FC<CursorGradientProps> = ({
   radius = 100, // Default radius
   dotSize = 10, // Default dot size
-  ringSize = 40, // Default ring diameter
+  ringSize = 75, // Default ring diameter
   ringThickness = 2 // Default ring border thickness
 }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [ringPosition, setRingPosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const updatePosition = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY })
+      const { clientX, clientY } = e
+      setPosition({ x: clientX, y: clientY })
+
+      // Update ring position with a slight delay
+      setTimeout(() => {
+        setRingPosition({ x: clientX, y: clientY })
+      }, 15) // Adjust the delay as needed
     }
 
     window.addEventListener('mousemove', updatePosition)
@@ -27,18 +34,19 @@ const CursorGradient: React.FC<CursorGradientProps> = ({
 
   return (
     <>
-      {/* Ring around the cursor */}
+      {/* Outer Ring with Delay */}
       <div
         className="fixed pointer-events-none"
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
+          left: `${ringPosition.x - ringSize / 2}px`,
+          top: `${ringPosition.y - ringSize / 2}px`,
           width: `${ringSize}px`,
           height: `${ringSize}px`,
-          transform: 'translate(-50%, -50%)',
-          border: `${ringThickness}px solid rgba(255, 255, 255, 0.8)`, // Adjust color and opacity as needed
+          border: `${ringThickness}px solid rgba(0, 0, 0, 0.8)`, // Adjust color and opacity as needed
           borderRadius: '50%',
-          zIndex: 9999
+          zIndex: 9998,
+          // Optional: Apply transition for smoother movement
+          transition: 'left 0.15s ease-out, top 0.15s ease-out'
         }}
       />
       {/* Gradient background */}
@@ -63,7 +71,7 @@ const CursorGradient: React.FC<CursorGradientProps> = ({
           top: `${position.y}px`,
           width: `${radius}px`,
           height: `${radius}px`,
-          backgroundColor: 'rgba(255, 255, 255, 0.2)', // Adjust opacity as needed
+          backgroundColor: 'rgba(0, 0, 0, 0.1)', // Adjust opacity as needed
           transform: 'translate(-50%, -50%)',
           zIndex: 0
         }}
@@ -76,7 +84,7 @@ const CursorGradient: React.FC<CursorGradientProps> = ({
           top: `${position.y}px`,
           width: `${dotSize}px`,
           height: `${dotSize}px`,
-          backgroundColor: '#ffffff',
+          backgroundColor: '#000',
           borderRadius: '50%',
           transform: 'translate(-50%, -50%)',
           zIndex: 99999
