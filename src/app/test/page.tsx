@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
 import CursorGradient from '@/components/CursorGradient'
 import { FluidNavigation } from '@/components/lunar/FluidNavigation'
+import GridLayout from '@/components/GridLayout'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -19,14 +20,14 @@ export default function Test() {
   const navItems = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
 
   function navigate() {
-    // the callback is fired once the animation is completed
+    // Callback fired once the animation is completed
     // to allow smooth transition
   }
 
   return (
-    <div className="w-screen h-screen relative overflow-hidden">
-      {/* StarGrid and CursorGradient as background */}
-      <div className="absolute inset-0">
+    <div className="w-screen min-h-screen relative">
+      {/* Background Layer */}
+      <div className="fixed inset-0 pointer-events-none z-0">
         <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
         <StarGrid
           active={20}
@@ -66,39 +67,47 @@ export default function Test() {
         </StarGrid>
       </div>
 
-      {/* FluidNavigation bar on top */}
-      <div className="absolute top-0 left-0 w-full mt-4 flex justify-center">
-        <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
-          {({ ready, size, position, duration }: any) => (
-            <div
-              style={{
-                '--size': size,
-                '--position': position,
-                '--duration': duration
-              }}>
-              <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
+      {/* Content Layer */}
+      <div className="relative z-10">
+        {/* FluidNavigation Bar */}
+        <div className="mt-4 flex justify-center">
+          <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
+            {({ ready, size, position, duration }: any) => (
+              <div
+                style={{
+                  '--size': size,
+                  '--position': position,
+                  '--duration': duration
+                }}>
+                <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
-              <div className="absolute inset-0 rounded-full bg-transparent"></div>
+                <div className="absolute inset-0 rounded-full bg-transparent"></div>
 
-              <div className="relative">
-                <div className={clsx({ hidden: !ready }, 'absolute inset-y-0 h-full w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white/10 transition-[width,transform] duration-[--duration]')}></div>
-                <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/3 w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white opacity-20 blur-md transition-[width,transform] duration-[--duration]')}></div>
+                <div className="relative">
+                  <div className={clsx({ hidden: !ready }, 'absolute inset-y-0 h-full w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white/10 transition-[width,transform] duration-[--duration]')}></div>
+                  <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/3 w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white opacity-20 blur-md transition-[width,transform] duration-[--duration]')}></div>
 
-                <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
-                  {navItems.map((item, index) => (
-                    <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
-                      {({ setActive, isActive }: any) => (
-                        <a href="#" className={clsx(isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75', 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
-                          {item}
-                        </a>
-                      )}
-                    </FluidNavigation.Item>
-                  ))}
-                </FluidNavigation.List>
+                  <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
+                    {navItems.map((item, index) => (
+                      <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
+                        {({ setActive, isActive }: any) => (
+                          <a href="#" className={clsx(isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75', 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
+                            {item}
+                          </a>
+                        )}
+                      </FluidNavigation.Item>
+                    ))}
+                  </FluidNavigation.List>
+                </div>
               </div>
-            </div>
-          )}
-        </FluidNavigation>
+            )}
+          </FluidNavigation>
+        </div>
+
+        {/* GridLayout Component */}
+        <div className="mt-8">
+          <GridLayout />
+        </div>
       </div>
     </div>
   )
