@@ -24,10 +24,50 @@ export default function Test() {
   }
 
   return (
-    // Adjust the outer container to center its children and align them to the top
-    <div className="w-screen h-screen flex justify-center items-start">
-      {/* Center the navigation bar */}
-      <div className="mt-4 flex justify-center">
+    <div className="w-screen h-screen relative overflow-hidden">
+      {/* StarGrid and CursorGradient as background */}
+      <div className="absolute inset-0">
+        <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
+        <StarGrid
+          active={20}
+          featured={10}
+          minActiveDuration={200}
+          maxActiveDuration={1500}
+          minFeatureDuration={500}
+          maxFeatureDuration={2000}
+          className="grid w-full h-full"
+          style={{
+            gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+            gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`
+          }}>
+          {items.map((item, index) => (
+            <StarGrid.Item key={index} className="relative flex aspect-square w-full items-center justify-center">
+              {({ isActive, isFeatured }: StarGridItemProps) => (
+                <>
+                  <svg className={clsx(isFeatured ? 'scale-1' : 'scale-0 opacity-0', 'absolute h-6 w-6 stroke-cyan-400/50 stroke-[1] transition-all duration-1000')} viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10.5" />
+                  </svg>
+
+                  <div
+                    style={{ '--duration': `${(index % 3) * 1.5}s` }}
+                    className={clsx(
+                      {
+                        'scale-50 bg-white/20': !isActive && !isFeatured,
+                        'h-2 w-2': isActive || isFeatured,
+                        'bg-white/30': isActive && !isFeatured,
+                        'bg-cyan-400': isFeatured
+                      },
+                      'relative h-1 w-1 rounded-full transition-all duration-500 [animation-duration:--duration]'
+                    )}></div>
+                </>
+              )}
+            </StarGrid.Item>
+          ))}
+        </StarGrid>
+      </div>
+
+      {/* FluidNavigation bar on top */}
+      <div className="absolute top-0 left-0 w-full mt-4 flex justify-center">
         <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
           {({ ready, size, position, duration }: any) => (
             <div
@@ -35,9 +75,7 @@ export default function Test() {
                 '--size': size,
                 '--position': position,
                 '--duration': duration
-              }}
-            >
-              {/* Remove elements that might stretch the width */}
+              }}>
               <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
               <div className="absolute inset-0 rounded-full bg-transparent"></div>
@@ -46,7 +84,6 @@ export default function Test() {
                 <div className={clsx({ hidden: !ready }, 'absolute inset-y-0 h-full w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white/10 transition-[width,transform] duration-[--duration]')}></div>
                 <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/3 w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white opacity-20 blur-md transition-[width,transform] duration-[--duration]')}></div>
 
-                {/* Ensure the list doesn't stretch */}
                 <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
                   {navItems.map((item, index) => (
                     <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
@@ -63,47 +100,6 @@ export default function Test() {
           )}
         </FluidNavigation>
       </div>
-
-      {/* Rest of your components */}
-      <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
-      <StarGrid
-        active={20}
-        featured={10}
-        minActiveDuration={200}
-        maxActiveDuration={1500}
-        minFeatureDuration={500}
-        maxFeatureDuration={2000}
-        className="grid w-full h-full"
-        style={{
-          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-          gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`
-        }}
-      >
-        {items.map((item, index) => (
-          <StarGrid.Item key={index} className="relative flex aspect-square w-full items-center justify-center">
-            {({ isActive, isFeatured }: StarGridItemProps) => (
-              <>
-                <svg className={clsx(isFeatured ? 'scale-1' : 'scale-0 opacity-0', 'absolute h-6 w-6 stroke-cyan-400/50 stroke-[1] transition-all duration-1000')} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10.5" />
-                </svg>
-
-                <div
-                  style={{ '--duration': `${(index % 3) * 1.5}s` }}
-                  className={clsx(
-                    {
-                      'scale-50 bg-white/20': !isActive && !isFeatured,
-                      'h-2 w-2': isActive || isFeatured,
-                      'bg-white/30': isActive && !isFeatured,
-                      'bg-cyan-400': isFeatured
-                    },
-                    'relative h-1 w-1 rounded-full transition-all duration-500 [animation-duration:--duration]'
-                  )}
-                ></div>
-              </>
-            )}
-          </StarGrid.Item>
-        ))}
-      </StarGrid>
     </div>
   )
 }
