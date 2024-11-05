@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import { TabKey } from '../interfaces/enums'
-import { ContactLayouts, HomeLayouts, NotesLayouts, WorkLayouts, keys } from '../utils/layout.helper'
+import { OverviewLayout, AboutLayout, WorkLayout, ProjectsLayout, ContactLayout, keys } from '../utils/layout.helper'
 
 interface LayoutProps {
   tab: TabKey
@@ -11,24 +11,27 @@ interface LayoutProps {
 }
 
 const GridLayout = ({ tab }: LayoutProps) => {
-  const [currentlayout, setCurrentLayout] = useState(HomeLayouts)
+  const [currentlayout, setCurrentLayout] = useState(OverviewLayout)
 
   useEffect(() => {
     switch (tab) {
-      case TabKey.All:
-        setCurrentLayout(WorkLayouts)
+      case TabKey.Overview:
+        setCurrentLayout(OverviewLayout)
+        break
+      case TabKey.About:
+        setCurrentLayout(AboutLayout)
         break
       case TabKey.Work:
-        setCurrentLayout(HomeLayouts)
+        setCurrentLayout(WorkLayout)
+        break
+      case TabKey.Projects:
+        setCurrentLayout(ProjectsLayout)
         break
       case TabKey.Contact:
-        setCurrentLayout(ContactLayouts)
+        setCurrentLayout(ContactLayout)
         break
-      // case TabKey.Blog:
-      //   setCurrentLayout(NotesLayouts)
-      //   break
       default:
-        setCurrentLayout(HomeLayouts)
+        setCurrentLayout(OverviewLayout)
     }
   }, [tab])
 
