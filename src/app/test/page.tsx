@@ -16,7 +16,7 @@ export default function Test() {
   const totalStars = columns * rows
   const items = Array(totalStars).fill(0)
 
-  const navItems = ['Overview', 'Integrations', 'Activity', 'Domains', 'Usage', 'Monitoring']
+  const navItems = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
 
   function navigate() {
     // the callback is fired once the animation is completed
@@ -24,10 +24,11 @@ export default function Test() {
   }
 
   return (
-    <div className="w-screen h-screen">
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-blue-900/40 to-teal-900/40 z-10"></div> */}
-      <div className="mx-auto shrink-0 overflow-hidden rounded-full">
-        <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2">
+    // Adjust the outer container to center its children and align them to the top
+    <div className="w-screen h-screen flex justify-center items-start">
+      {/* Center the navigation bar */}
+      <div className="mt-4 flex justify-center">
+        <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
           {({ ready, size, position, duration }: any) => (
             <div
               style={{
@@ -36,6 +37,7 @@ export default function Test() {
                 '--duration': duration
               }}
             >
+              {/* Remove elements that might stretch the width */}
               <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
               <div className="absolute inset-0 rounded-full bg-transparent"></div>
@@ -44,11 +46,12 @@ export default function Test() {
                 <div className={clsx({ hidden: !ready }, 'absolute inset-y-0 h-full w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white/10 transition-[width,transform] duration-[--duration]')}></div>
                 <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/3 w-[var(--size)] translate-x-[var(--position)] rounded-full bg-white opacity-20 blur-md transition-[width,transform] duration-[--duration]')}></div>
 
+                {/* Ensure the list doesn't stretch */}
                 <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
                   {navItems.map((item, index) => (
                     <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
                       {({ setActive, isActive }: any) => (
-                        <a href="#" className={clsx([isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75'], 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
+                        <a href="#" className={clsx(isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75', 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
                           {item}
                         </a>
                       )}
@@ -61,14 +64,15 @@ export default function Test() {
         </FluidNavigation>
       </div>
 
+      {/* Rest of your components */}
       <CursorGradient radius={100} dotSize={10} ringSize={40} ringThickness={2} />
       <StarGrid
-        active={20} // Maximum number of stars to activate at once
-        featured={10} // Maximum number of stars to feature at once
-        minActiveDuration={200} // Minimum time a star stays active
-        maxActiveDuration={1500} // Maximum time a star stays active
-        minFeatureDuration={500} // Minimum time a star stays featured
-        maxFeatureDuration={2000} // Maximum time a star stays featured
+        active={20}
+        featured={10}
+        minActiveDuration={200}
+        maxActiveDuration={1500}
+        minFeatureDuration={500}
+        maxFeatureDuration={2000}
         className="grid w-full h-full"
         style={{
           gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
@@ -88,7 +92,7 @@ export default function Test() {
                   className={clsx(
                     {
                       'scale-50 bg-white/20': !isActive && !isFeatured,
-                      'h-2 w-2 ': isActive || isFeatured,
+                      'h-2 w-2': isActive || isFeatured,
                       'bg-white/30': isActive && !isFeatured,
                       'bg-cyan-400': isFeatured
                     },
