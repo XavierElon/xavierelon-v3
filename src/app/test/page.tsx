@@ -2,7 +2,7 @@
 
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
-import CursorGradient from '@/components/custom/CursorGradient'
+import CursorGradient from '@/components/custom/CursorGradient/CursorGradient'
 import { FluidNavigation } from '@/components/lunar/FluidNavigation'
 import GridLayout from '@/components/GridLayout'
 
