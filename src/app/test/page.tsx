@@ -2,9 +2,9 @@
 
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
-import CursorGradient from '@/components/CursorGradient'
+import CursorGradient from '@/components/custom/CursorGradient/CursorGradient'
 import { FluidNavigation } from '@/components/lunar/FluidNavigation'
-import GridLayout from '@/components/GridLayout'
+import GridLayout from '@/components/bento/GridLayout'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -40,7 +40,8 @@ export default function Test() {
           style={{
             gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
             gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`
-          }}>
+          }}
+        >
           {items.map((item, index) => (
             <StarGrid.Item key={index} className="relative flex aspect-square w-full items-center justify-center">
               {({ isActive, isFeatured }: StarGridItemProps) => (
@@ -59,7 +60,8 @@ export default function Test() {
                         'bg-cyan-400': isFeatured
                       },
                       'relative h-1 w-1 rounded-full transition-all duration-500 [animation-duration:--duration]'
-                    )}></div>
+                    )}
+                  ></div>
                 </>
               )}
             </StarGrid.Item>
@@ -78,7 +80,8 @@ export default function Test() {
                   '--size': size,
                   '--position': position,
                   '--duration': duration
-                }}>
+                }}
+              >
                 <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
                 <div className="absolute inset-0 rounded-full bg-transparent"></div>
