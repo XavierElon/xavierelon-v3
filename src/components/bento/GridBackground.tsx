@@ -1,29 +1,24 @@
 // GridBackground.tsx
 
 import React, { useState } from 'react'
-import Layout from './Layout'
-import Navbar from './navbar'
-// import { BackgroundBeams } from './aceternity/BackgroundBeams'
-// import CursorGradient from './CursorGradient/CursorGradient'
-// import { AuroraBackground } from './aceternity/AuroraBackground'
+import GridLayout from '../GridLayout'
+import Navbar from './Navbar'
 
 export enum TabKey {
-  Overview = 'Overview',
-  About = 'About',
+  Home = 'Home',
   Work = 'Work',
-  Projects = 'Projects',
+  Blog = 'Blog',
   Contact = 'Contact'
 }
 
 export function GridBackground() {
-  const [tab, setTab] = useState<TabKey>(TabKey.Overview)
+  const [tab, setTab] = useState<TabKey>(TabKey.Home)
 
   const tabOffsets: { [key in TabKey]: number } = {
-    Overview: 0,
-    About: 1,
-    Work: 2,
-    Projects: 3,
-    Contact: 4
+    Home: 0,
+    Work: 1,
+    Blog: 2,
+    Contact: 3
   }
 
   const baseX = 10
@@ -54,7 +49,7 @@ export function GridBackground() {
 
         {/* Content */}
         <div className="relative z-40 flex items-center justify-center">
-          <Layout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
+          <GridLayout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
           {/* <CursorGradient /> */}
         </div>
       </div>
