@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Layout from '../../components/custom/Layout'
-import GridBackground from '../../components/custom/Layout'
+import GridLayout from '../../components/bento/GridLayout'
 
 export enum TabKey {
   Home = 'Home',
@@ -11,7 +10,7 @@ export enum TabKey {
   Contact = 'Contact'
 }
 
-function App() {
+function Bento() {
   const [tab, setTab] = useState<TabKey>(TabKey.Home)
 
   const tabOffsets: { [key in TabKey]: number } = {
@@ -29,12 +28,9 @@ function App() {
 
   return (
     <main className="bg-[#f7f2f2]">
-      <Layout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
-      <div className="w-full h-full">
-        <GridBackground />
-      </div>
+      <GridLayout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
     </main>
   )
 }
 
-export default App
+export default Bento
