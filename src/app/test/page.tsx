@@ -1,10 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
 import CursorGradient from '@/components/custom/CursorGradient/CursorGradient'
 import { FluidNavigation } from '@/components/lunar/FluidNavigation'
 import GridLayout from '@/components/bento/GridLayout'
+import { TabKey } from '@/interfaces/enums'
+import Portal from '@/components/custom/Portal/Portal'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -12,12 +15,32 @@ interface StarGridItemProps {
 }
 
 export default function Test() {
-  const columns = 60
-  const rows = 30
-  const totalStars = columns * rows
-  const items = Array(totalStars).fill(0)
+  const [tab, setTab] = useState<TabKey>(TabKey.Overview)
 
-  const navItems = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
+  {
+    /* NAVIGATION LOGIC */
+  }
+  const tabOffsets: { [key in TabKey]: number } = {
+    [TabKey.Overview]: 0,
+    [TabKey.About]: 1,
+    [TabKey.Work]: 2,
+    [TabKey.Projects]: 3,
+    [TabKey.Contact]: 4,
+    [TabKey.Blog]: 5
+  }
+
+  const baseX: number = 520
+  const baseW: number = 221.5
+
+  const x: number = baseX + tabOffsets[tab] * baseW
+  const w: number = baseW
+
+  const columns: number = 60
+  const rows: number = 30
+  const totalStars: number = columns * rows
+  const items: Array<number> = Array(totalStars).fill(0)
+
+  const navItems: string[] = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
 
   function navigate() {
     // Callback fired once the animation is completed
@@ -109,7 +132,8 @@ export default function Test() {
 
         {/* GridLayout Component */}
         <div className="mt-8">
-          <GridLayout />
+          <GridLayout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
+          <Portal />
         </div>
       </div>
     </div>
