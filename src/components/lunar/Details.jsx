@@ -10,7 +10,7 @@ function Root({ children, className, as: Component = 'div', ...props }) {
   const [activeItem, setActiveItem] = useState(null)
 
   function setActive(index) {
-    if (activeItem == index) {
+    if (activeItem === index) {
       setActiveItem(null)
     } else {
       setActiveItem(index)
@@ -49,7 +49,7 @@ function Item({ children, className, as: Component = 'div', ...props }) {
     return context.peers ? context.peers.indexOf(container.current) : -1
   }, [context.peers])
 
-  const isActive = useMemo(() => index == context.activeItem, [context.activeItem, index])
+  const isActive = useMemo(() => index === context.activeItem, [context.activeItem, index])
 
   const toggle = () => context.setActive(index)
 

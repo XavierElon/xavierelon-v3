@@ -70,7 +70,7 @@ function Block({ activeClass, as: Component = 'div', children, className, ...pro
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    if (index != -1 && !ready) {
+    if (index !== -1 && !ready) {
       rootContext.addItem(index, activeClass)
 
       setReady(true)

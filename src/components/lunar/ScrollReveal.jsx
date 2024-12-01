@@ -16,9 +16,9 @@ export function ScrollReveal({ children, className, once = false, trigger = 'vis
       const y = container.current.getBoundingClientRect().top
       const height = container.current.getBoundingClientRect().height
 
-      if (trigger == 'top') {
+      if (trigger === 'top') {
         return intersection.isIntersecting && y <= 0
-      } else if (trigger == 'middle') {
+      } else if (trigger === 'middle') {
         return y > windowHeight / 2 - height && y <= windowHeight / 2
       }
 

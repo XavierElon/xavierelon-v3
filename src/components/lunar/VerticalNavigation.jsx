@@ -136,7 +136,7 @@ export function Item({ onActivated = () => {}, active = false, as: Component = '
     return listContext.peers ? listContext.peers.indexOf(container.current) : -1
   }, [listContext.peers])
 
-  const isActive = useMemo(() => index == listContext.activeItem, [listContext.activeItem, index])
+  const isActive = useMemo(() => index === listContext.activeItem.index, [listContext.activeItem, index])
 
   // once
   useEffect(() => {
@@ -163,7 +163,7 @@ export function Item({ onActivated = () => {}, active = false, as: Component = '
       rootContext.setActive(index, container.current.getBoundingClientRect().width, container.current.offsetLeft)
     }
 
-    if (event != false) {
+    if (event !== false) {
       setTimeout(() => onActivated(), rootContext.duration)
     }
   }
