@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-const StyledContainer = styled.div.attrs<{ isPortalOpen }>((props) => ({
+const StyledContainer = styled.div.attrs<{ isPortalOpen: boolean }>((props) => ({
   // Here, we don't pass down the isPortalOpen prop to the DOM element
-}))<{ isPortalOpen }>`
+}))<{ isPortalOpen: boolean }>`
   margin: 0;
   min-height: 100vh;
   min-width: 35vh;
@@ -78,12 +78,12 @@ const ImageOverlayText = styled.div<{ color?: string }>`
   font-weight: bold;
 `
 
-const StarWars = React.forwardRef(({ isPortalOpen }, ref) => {
+const StarWars = React.forwardRef<HTMLDivElement, { isPortalOpen: boolean }>(({ isPortalOpen }, ref) => {
   useEffect(() => {
     console.log(isPortalOpen)
   }, [isPortalOpen])
   return (
-    <StyledContainer>
+    <StyledContainer isPortalOpen={isPortalOpen}>
       <StarWarsDiv ref={ref}>
         <StyledHeader>Travel Back in Time</StyledHeader>
         <ul className="inline-grid grid-cols-2 grid-rows-2 gap-2 float-right" aria-label="XXX">

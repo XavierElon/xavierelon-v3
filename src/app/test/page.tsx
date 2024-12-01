@@ -1,10 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import clsx from 'clsx'
 import { StarGrid } from '../../components/lunar/StarGrid'
 import CursorGradient from '@/components/custom/CursorGradient/CursorGradient'
 import { FluidNavigation } from '@/components/lunar/FluidNavigation'
 import GridLayout from '@/components/bento/GridLayout'
+import { TabKey } from '@/interfaces/enums'
+import Portal from '@/components/custom/Portal/Portal'
 
 interface StarGridItemProps {
   isActive: boolean
@@ -12,12 +15,32 @@ interface StarGridItemProps {
 }
 
 export default function Test() {
-  const columns = 60
-  const rows = 30
-  const totalStars = columns * rows
-  const items = Array(totalStars).fill(0)
+  const [tab, setTab] = useState<TabKey>(TabKey.Overview)
 
-  const navItems = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
+  {
+    /* NAVIGATION LOGIC */
+  }
+  const tabOffsets: { [key in TabKey]: number } = {
+    [TabKey.Overview]: 0,
+    [TabKey.About]: 1,
+    [TabKey.Work]: 2,
+    [TabKey.Projects]: 3,
+    [TabKey.Contact]: 4
+    // [TabKey.Blog]: 5
+  }
+
+  const baseX: number = 520
+  const baseW: number = 221.5
+
+  const x: number = baseX + tabOffsets[tab] * baseW
+  const w: number = baseW
+
+  const columns: number = 60
+  const rows: number = 30
+  const totalStars: number = columns * rows
+  const items: Array<number> = Array(totalStars).fill(0)
+
+  const navItems: string[] = ['Overview', 'About', 'Work', 'Projects', 'Contact', 'Blog']
 
   function navigate() {
     // Callback fired once the animation is completed
@@ -51,7 +74,7 @@ export default function Test() {
                   </svg>
 
                   <div
-                    style={{ '--duration': `${(index % 3) * 1.5}s` }}
+                    style={{ '--duration': `${(index % 3) * 1.5}s` } as React.CSSProperties}
                     className={clsx(
                       {
                         'scale-50 bg-white/20': !isActive && !isFeatured,
@@ -76,11 +99,13 @@ export default function Test() {
           <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
             {({ ready, size, position, duration }: any) => (
               <div
-                style={{
-                  '--size': size,
-                  '--position': position,
-                  '--duration': duration
-                }}
+                style={
+                  {
+                    '--size': size,
+                    '--position': position,
+                    '--duration': duration
+                  } as React.CSSProperties
+                }
               >
                 <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
@@ -92,7 +117,7 @@ export default function Test() {
 
                   <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
                     {navItems.map((item, index) => (
-                      <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
+                      <FluidNavigation.Item key={index} as="li" onActivated={navigate} className="cursor-pointer">
                         {({ setActive, isActive }: any) => (
                           <a href="#" className={clsx(isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75', 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
                             {item}
@@ -109,7 +134,8 @@ export default function Test() {
 
         {/* GridLayout Component */}
         <div className="mt-8">
-          <GridLayout />
+          <GridLayout tab={tab} setTab={setTab} left={x} sliderWidth={w} />
+          <Portal />
         </div>
       </div>
     </div>

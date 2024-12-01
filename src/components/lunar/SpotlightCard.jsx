@@ -21,7 +21,7 @@ export function SpotlightCard({ as: Component = 'div', from = 'rgba(255,255,255,
     return [from, via, to].filter((value) => !!value).join(',')
   }, [hsl, hslMax, hslMin, from, via, to, elY, elX, elH, elW])
 
-  const classes = mode == 'before' ? `before:absolute before:inset-0 before:bg-[radial-gradient(var(--spotlight-size)_circle_at_var(--x)_var(--y),var(--spotlight-color-stops))]` : `after:absolute after:inset-0 after:bg-[radial-gradient(var(--spotlight-size)_circle_at_var(--x)_var(--y),var(--spotlight-color-stops))]`
+  const classes = mode === 'before' ? `before:absolute before:inset-0 before:bg-[radial-gradient(var(--spotlight-size)_circle_at_var(--x)_var(--y),var(--spotlight-color-stops))]` : `after:absolute after:inset-0 after:bg-[radial-gradient(var(--spotlight-size)_circle_at_var(--x)_var(--y),var(--spotlight-color-stops))]`
 
   return (
     <Component

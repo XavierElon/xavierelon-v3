@@ -9,7 +9,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ tab, setTab, left = 0, sliderWidth = 0 }) => {
   const tabs = [
-    { key: TabKey.All, label: 'All' },
+    { key: TabKey.Overview, label: 'Overview' },
     { key: TabKey.About, label: 'About' },
     { key: TabKey.Work, label: 'Work' },
     { key: TabKey.Projects, label: 'Projects' },

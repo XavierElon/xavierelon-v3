@@ -52,9 +52,9 @@ function Token({ min = 100, max = 900, threshold = 300, body, className, as: Com
       targetValue = Math.round(Math.min(Math.max(value * max, min), max))
     }
 
-    if (previous == min && targetValue > min) {
+    if (previous === min && targetValue > min) {
       animate(targetValue)
-    } else if (previous > min && targetValue == min) {
+    } else if (previous > min && targetValue === min) {
       animate(targetValue)
     } else if (!transitioning) {
       fontWeight.jump(targetValue)
