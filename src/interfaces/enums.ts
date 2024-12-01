@@ -3,6 +3,5 @@ export enum TabKey {
   About = 'About',
   Work = 'Work',
   Projects = 'Projects',
-  Contact = 'Contact',
-  Blog = 'Blog'
+  Contact = 'Contact'
 }
