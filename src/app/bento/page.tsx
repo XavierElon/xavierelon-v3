@@ -2,22 +2,17 @@
 
 import { useState } from 'react'
 import GridLayout from '../../components/bento/GridLayout'
+import { TabKey } from '../../interfaces/enums' // Ensure this path is correct
 
-export enum TabKey {
-  Home = 'Home',
-  Work = 'Work',
-  Blog = 'Blog',
-  Contact = 'Contact'
-}
-
-function Bento() {
-  const [tab, setTab] = useState<TabKey>(TabKey.Home)
+export default function Bento() {
+  const [tab, setTab] = useState<TabKey>(TabKey.Overview)
 
   const tabOffsets: { [key in TabKey]: number } = {
-    Home: 0,
-    Work: 1,
-    Blog: 2,
-    Contact: 3
+    Overview: 0,
+    About: 1,
+    Work: 2,
+    Projects: 3,
+    Contact: 4
   }
 
   const baseX = 520
@@ -32,5 +27,3 @@ function Bento() {
     </main>
   )
 }
-
-export default Bento

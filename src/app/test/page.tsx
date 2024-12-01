@@ -25,8 +25,8 @@ export default function Test() {
     [TabKey.About]: 1,
     [TabKey.Work]: 2,
     [TabKey.Projects]: 3,
-    [TabKey.Contact]: 4,
-    [TabKey.Blog]: 5
+    [TabKey.Contact]: 4
+    // [TabKey.Blog]: 5
   }
 
   const baseX: number = 520
@@ -74,7 +74,7 @@ export default function Test() {
                   </svg>
 
                   <div
-                    style={{ '--duration': `${(index % 3) * 1.5}s` }}
+                    style={{ '--duration': `${(index % 3) * 1.5}s` } as React.CSSProperties}
                     className={clsx(
                       {
                         'scale-50 bg-white/20': !isActive && !isFeatured,
@@ -99,11 +99,13 @@ export default function Test() {
           <FluidNavigation as="nav" className="relative rounded-full border border-white/10 bg-white/5 p-2 w-fit mx-auto">
             {({ ready, size, position, duration }: any) => (
               <div
-                style={{
-                  '--size': size,
-                  '--position': position,
-                  '--duration': duration
-                }}
+                style={
+                  {
+                    '--size': size,
+                    '--position': position,
+                    '--duration': duration
+                  } as React.CSSProperties
+                }
               >
                 <div className={clsx({ hidden: !ready }, 'absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-[--duration]')}></div>
 
@@ -115,7 +117,7 @@ export default function Test() {
 
                   <FluidNavigation.List as="ul" className="relative flex items-center gap-3">
                     {navItems.map((item, index) => (
-                      <FluidNavigation.Item key={index} as="li" onActivated={navigate}>
+                      <FluidNavigation.Item key={index} as="li" onActivated={navigate} className="cursor-pointer">
                         {({ setActive, isActive }: any) => (
                           <a href="#" className={clsx(isActive ? 'text-white/75 text-shadow-sm' : 'text-white/60 hover:text-white/75', 'inline-block px-4 py-1.5 text-sm font-light transition-[text-shadow,color] duration-300')} onClick={setActive}>
                             {item}

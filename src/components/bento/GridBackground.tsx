@@ -3,22 +3,18 @@
 import React, { useState } from 'react'
 import GridLayout from '../GridLayout'
 import Navbar from './Navbar'
-
-export enum TabKey {
-  Home = 'Home',
-  Work = 'Work',
-  Blog = 'Blog',
-  Contact = 'Contact'
-}
+import { TabKey } from '@/interfaces/enums'
 
 export function GridBackground() {
-  const [tab, setTab] = useState<TabKey>(TabKey.Home)
+  const [tab, setTab] = useState<TabKey>(TabKey.Overview)
 
   const tabOffsets: { [key in TabKey]: number } = {
-    Home: 0,
-    Work: 1,
-    Blog: 2,
-    Contact: 3
+    [TabKey.Overview]: 0,
+    [TabKey.About]: 1,
+    [TabKey.Work]: 2,
+    [TabKey.Projects]: 3,
+    [TabKey.Contact]: 4
+    // [TabKey.Blog]: 5
   }
 
   const baseX = 10
